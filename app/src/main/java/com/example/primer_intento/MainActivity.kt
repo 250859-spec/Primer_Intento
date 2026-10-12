@@ -1,6 +1,6 @@
+
 package com.example.primer_intento
 
-import android.app.HandoffActivityData
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -16,97 +16,94 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 
 class MainActivity : AppCompatActivity() {
-  //DECLARACION DE VARIABLES
-  private lateinit var tvMensaje: TextView
-  private lateinit var etxtNombre: EditText
-  private lateinit var btnRegistrar: Button
-  private lateinit var pbCarga: ProgressBar
-  private lateinit var etxtMatricula : EditText
-  private lateinit var btnLimpiar: Button
 
-  // Crear variable contadora
-  private var contadorAsistente = 0
+    // DECLARACION DE VARIABLES
+    private lateinit var tvMensaje: TextView
+    private lateinit var etxtNombre: EditText
+    private lateinit var btnSaludar: Button
+    private lateinit var pbCarga: ProgressBar
+    private lateinit var etxtApellido: EditText
+    private lateinit var btnLimpiar: Button
 
-  /*override fun onCreate(savedInstanceState: Bundle?) {
+    // VARIABLE CONTADORA
+    private var contadorAsistente = 0
+
+    override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_main)
+
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
+            v.setPadding(
+                systemBars.left,
+                systemBars.top,
+                systemBars.right,
+                systemBars.bottom
+            )
             insets
-        }*/
-  //Zona Oncreate
-      override fun onCreate(savedInstanceState: Bundle?) {
-      super.onCreate(savedInstanceState)
-      enableEdgeToEdge()
-      setContentView(R.layout.activity_main)
-      setContentView(R.layout.activity_main)
+        }
 
+        // CONECTAR LAS VISTAS
+        tvMensaje = findViewById(R.id.tvMensaje)
+        etxtNombre = findViewById(R.id.etxtNombre)
+        btnSaludar = findViewById(R.id.btnSaludar)
+        pbCarga = findViewById(R.id.pbCarga)
+        etxtApellido = findViewById(R.id.etxtApellido)
+        btnLimpiar = findViewById(R.id.btnLimpiar)
 
-      ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
-        val systemBar = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-        v.setPadding(systemBar.left, systemBar.top, systemBar.right, systemBar.bottom)
-        insets
-      }
-
-      /* Coonectar las vistas */
-      tvMensaje = findViewById(R.id.tvMensaje)
-      etxtNombre = findViewById(R.id.etxtNombre)
-      btnRegistrar = findViewById(R.id.btnRegistrar)
-      pbCarga = findViewById(R.id.pbCarga)
-      etxtMatricula= findViewById(R.id.etxtMatricula)
-      btnLimpiar= findViewById(R.id.btnLimpiar)
-
-      //Creacion del listener
-      btnRegistrar.setOnClickListener { registrar() }
-      btnLimpiar.setOnClickListener { limpiar() }
-
+        // CREACION DE LISTENERS
+        btnSaludar.setOnClickListener { registrar() }
+        btnLimpiar.setOnClickListener { limpiar() }
     }
 
-  //Funciones}
-  private fun registrar() {
-    val nombre = etxtNombre.text.toString().trim()
-    val matricula = etxtMatricula.text.toString().trim()
+    private fun registrar() {
+        val nombre = etxtNombre.text.toString().trim()
+        val matricula = etxtApellido.text.toString().trim()
 
+        if (nombre.isEmpty()) {
+            Toast.makeText(
+                this,
+                "Escribe tu nombre primero",
+                Toast.LENGTH_SHORT
+            ).show()
+            return
+        } else if (nombre.length < 3) {
+            Toast.makeText(
+                this,
+                "El nombre es muy corto",
+                Toast.LENGTH_SHORT
+            ).show()
+            return
+        }
 
-    if (nombre.isEmpty()){
-      Toast.makeText(this,
-        "Escribe tu nombre primero", Toast.LENGTH_SHORT).show()
-      return
-    } else if (nombre.length < 3){
-      Toast.makeText(this, "El nombre es muy corto", Toast.LENGTH_SHORT).show()
-    return
+        // CONTADOR DE SALUDOS
+        contadorAsistente++
+
+        pbCarga.visibility = View.VISIBLE
+        tvMensaje.text = ""
+        btnSaludar.isEnabled = false
+
+        Handler(Looper.getMainLooper()).postDelayed({
+            pbCarga.visibility = View.GONE
+
+            tvMensaje.text =
+                "Hola, $nombre! BIENVENIDO. Es la ${contadorAsistente}° vez que nos saludamos."
+
+            btnSaludar.isEnabled = true
+        }, 1500)
     }
 
-
-   //CONTADOR SALUDOS
-    contadorAsistente++
-
-    pbCarga.visibility= View.VISIBLE
-    tvMensaje.text= ""
-    btnRegistrar.isEnabled = false
-
-    Handler(Looper.getMainLooper()).postDelayed({
-      pbCarga.visibility = View.GONE
-
-
-      tvMensaje.text = "Hola, $nombre! BIENVENIDO Es la ${contadorAsistente}° vez que nos saludamos."
-      btnRegistrar.isEnabled  = true
-    }, 1500)
-
-  }
-  private fun limpiar() {
-    etxtNombre.setText("")
-    etxtMatricula.setText("")
-    pbCarga.visibility = View.GONE
-    tvMensaje.text="Escribe tu nombre para empezar"
-    btnRegistrar.text="Saludar"
-    btnRegistrar.isEnabled=true
-    etxtNombre.requestFocus()
-
-  }
-
+    private fun limpiar() {
+        etxtNombre.setText("")
+        etxtApellido.setText("")
+        pbCarga.visibility = View.GONE
+        tvMensaje.text = "Escribe tu nombre para empezar"
+        btnSaludar.text = "Saludar"
+        btnSaludar.isEnabled = true
+        etxtNombre.requestFocus()
+    }
 }
+
 
 

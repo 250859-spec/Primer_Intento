@@ -46,10 +46,10 @@
         app:layout_constraintVertical_bias="0.478" />
 
     <EditText
-        android:id="@+id/etxtMatricula"
+        android:id="@+id/etxtApellido"
         android:layout_width="209dp"
         android:layout_height="47dp"
-        android:hint="Ingresa tu matricula..."
+        android:hint="Ingresa tu apellido..."
         android:inputType="textPersonName"
         app:layout_constraintBottom_toTopOf="@+id/tvMensaje"
         app:layout_constraintEnd_toEndOf="parent"
@@ -61,10 +61,10 @@
 
 
     <Button
-        android:id="@+id/btnRegistrar"
+        android:id="@+id/btnSaludar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Registrar"
+        android:text="Saludar"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
